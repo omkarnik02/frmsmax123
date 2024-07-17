@@ -1,0 +1,384 @@
+{% extends "base.html" %}
+{% block title %}Rule{% endblock %}
+{% block content %}
+<div style="  overflow-y: scroll; height: 90vh; ">
+    <h1>Rule and watchlist module</h1>
+    <div style="display:flex">
+    <button id="display_form_button" class="btn btn-primary mb-3 " class="fa fa-external-link" style="background-color:green;margin-left:90%;margin-top:-35px;">Go to Form</button>
+    </div>
+    <div class="content1" style="display:none">
+        <form action="/rules_watchlist/sys" method="post">
+                <label class="sliderbarval" for="sliderbarValue" style="font-weight:bold;font-size:20px;">Slider Value:
+                <span id="sliderValue" style="margin-left:20px;margin-top:-20px;font-weight:bold;color:#2e004f ;" >{{ latest[0] }}</span>
+                </label><br>
+            <div class="sliderbarstyle " style="float: left; width: 90%">
+                <input  type="range" id="sliderbarValue" name="sliderbarValue" min="0" max="100" value="{{ latest[0] }}" >
+                <br>
+            </div>
+
+            <div style="float: right; width: 10%" class="switchclass">
+                <div class="switch-item">
+                    <label class="switch">
+                        <input type="checkbox" id="ruleSwitchValue" name="ruleSwitchValue" {% if latest[1]==1 %}checked{% endif %}>
+                        <span class="slider round"></span>
+                    </label>
+                    <span id="ruleStatus" style="font-weight:bold;font-size:15px;">Rule</span>
+                </div>
+                <div class="switch-item">
+                    <label class="switch">
+                        <input type="checkbox" id="aiSwitchValue" name="aiSwitchValue" {% if latest[2]==1 %}checked{% endif %}>
+                        <span class="slider round"></span>
+                    </label>
+                    <span id="aiStatus" style="font-weight:bold;font-size:15px;">AI</span>
+                </div>
+            </div>
+            <button type="submit" id="submitSwitch" class="btn btn-sucess mb-3" class="submitforswitch" >Submit</button>
+        </form>
+   </div>
+
+
+    <div id="Pagebox" class="content box"  >
+    <div style="margin-top: 20px; margin-left: 20px;">
+    <!-- Search Form -->
+        <form method="GET" action="{{ url_for('rules_watchlist_routes.rules',subpath=action) }}" class="form-inline mb-3 ">
+            <div class="form-row col-md-12">
+                <div class="form-group col-md-2">
+                    <div class="  pl-0">
+                        <label for="search_id" class="font-weight-bold text-left">Rule ID:</label>
+                    </div>
+                    <div class="col-12 pl-0">
+                        <input type="text" id="search_id" name="search_id" class="form-control form-control-md" style="width: 100%;" value="{{ request.args.get('search_id', '') }}">
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <div class=" pl-0">
+                        <label for="search_channel" class="font-weight-bold text-left">Channel:</label>
+                    </div>
+                    <div class="col-12 pl-0">
+                        <select id="search_channel" name="search_channel" class="form-control form-control-md" style="width: 100%;">
+                            {% for option in channel %}
+                                    <option value="{{ option[1] }}">{{ option[1] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <div class=" pl-0">
+                        <label for="search_columns" class="font-weight-bold text-left">Column Name:</label>
+                    </div>
+                    <div class="col-12 pl-0">
+
+                        <select id="search_columns" name="search_columns" class="form-control form-control-md" style="width: 100%;">
+                            {% for cl in columnname %}
+                                    <option value="{{ cl[1] }}">{{ cl[1] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <div class=" pl-0">
+                        <label for="search_Allow/Prevent" class="font-weight-bold text-left">Allow/Prevent:</label>
+                    </div>
+                    <div class="col-12 pl-0">
+                        <select id="search_Allow/Prevent" name="search_Allow/Prevent" class="form-control form-control-md" style="width: 100%;">
+                            <option value="">All</option>
+                            <option value="Allow">Allow</option>
+                            <option value="Prevent">Prevent</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <div class=" pl-0">
+                        <label for="search_created_on" class="font-weight-bold text-left">Created On:</label>
+                    </div>
+                    <div class="col-12 pl-0">
+                        <input type="text" id="search_created_on" name="search_created_on" class="form-control form-control-md" style="width: 100%;" value="{{ request.args.get('search_created_on', '') }}">
+                    </div>
+                </div>
+                  <div class="form-group col-md-2">
+                    <div class=" pl-0">
+                        <label for="search_created_by" class="font-weight-bold text-left">Created By:</label>
+                    </div>
+                    <div class="col-12 pl-0">
+                        <input type="text" id="search_created_by" name="search_created_by" class="form-control form-control-md" style="width: 100%;" value="{{ request.args.get('search_created_by', '') }}">
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <div class=" pl-0">
+                        <label for="search_status" class="font-weight-bold text-left">Status:</label>
+                    </div>
+                    <div class="col-12 pl-0">
+                        <select id="search_status" name="search_Status" class="form-control form-control-md" style="width: 100%;">
+                            <option value="">All</option>
+                            <option value="Enabled">Enabled</option>
+                            <option value="Disabled">Disabled</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <div class=" pl-0">
+                        <label for="search_modified_on" class="font-weight-bold text-left">Modified On:</label>
+                    </div>
+                    <div class="col-12 pl-0">
+                        <input type="text" id="search_modified_on" name="search_modified_on" class="form-control form-control-md" style="width: 100%;" value="{{ request.args.get('search_modified_on', '') }}">
+                    </div>
+                </div>
+                  <div class="form-group col-md-2">
+                    <div class=" pl-0">
+                        <label for="search_modified_by" class="font-weight-bold text-left">Modified By:</label>
+                    </div>
+                    <div class="col-12 pl-0">
+                        <input type="text" id="search_modified_by" name="search_modified_by" class="form-control form-control-md" style="width: 100%;" value="{{ request.args.get('search_modified_by', '') }}">
+                    </div>
+                </div>
+
+                <div class="form-group col-md-2 align-self-end" style="margin-bottom: 4px">
+                    <div class=" pl-0">
+                        <button type="submit" class="btn btn-primary btn-md">Search</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <h1>Rule Management</h1>
+    <div class="container">
+        {% set items_per_page = 10 %}
+        {% set total_pages = (rules | length // items_per_page) + (1 if rules | length % items_per_page > 0 else 0) %}
+
+
+        <div class="ruleTable">
+            <div class="Tabletop" style="display: flex;justify-content: space-between; align-items: center; ">
+                {% if userdetails.Role == 'Maker' or userdetails.Role == 'Admin'   %}
+                    <button id="add-rule-button" class="btn btn-primary mb-3">+Add Rule</button>
+                {% else %}
+                    <button id="add-rule-button1" class="btn btn-primary mb-3" disabled style="visibility: hidden">+Add Rule</button>
+                {% endif %}
+                <div class="btn-group" style="display: flex; gap: 10px ">
+                     <button id="approve-button" class="btn btn-success mb-3" style="font-size: 0.9em; margin: 10px 0px 10px 0px;" >Approved</button>
+                    <button id="pending-button" class="btn btn-warning mb-3" style="font-size: 0.9em; margin: 10px 0px 10px 0px;">Pending</button>
+                    <button id="decline-button" class="btn btn-danger mb-3" style="font-size: 0.9em; margin: 10px 0px 10px 0px;">Declined</button>
+                </div>
+            </div>
+            <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Channel</th>
+                    <th>Column Name</th>
+                    <th>Operator</th>
+                    <th>Value</th>
+                    <th>Allow/Prevent</th>
+                    <th>Created On</th>
+                    <th>Created By</th>
+                    <th>Status</th>
+                    <th>Modified On</th>
+                    <th>Modified By</th>
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="new-rule-row" style="display: none;">
+                    <td>ID</td>
+                    <td>
+                        <select class="form-control" name="new-channel" required>
+                            {% for option in channel %}
+                                <option value="{{ option[1] }}">{{ option[1] }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                    <select class="form-control" name="new-column" placeholder="Column Name" required>
+                        {% for option in columnname %}
+                            <option value="{{ option[1] }}">{{ option[1] }}</option>
+                        {% endfor %}
+                    </select>
+                    </td>
+<!--                    <td><input type="text" class="form-control" name="new-operator" placeholder="Operator" required></td>-->
+
+
+                     <td>
+                    <select class="form-control" name="new-operator" required>
+                        {% for option in operator %}
+                            <option value="{{ option[0] }}">{{ option[1] }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+<!--                    <td><input type="text" class="form-control" name="new-value" placeholder="Value" required></td>-->
+                          <td id="valueInputs">
+        <input type="text" class="form-control" name="new-value" placeholder="Value" required>
+        <button type="button" class="btn btn-secondary add-value-btn" style="display: none;">
+            <i class="fas fa-plus"></i>Add Plus
+        </button>
+    </td>
+                    <td class="allpre">
+                          <select id="permissionDropdown">
+                              <option value="allow">Allow</option>
+                              <option value="prevent">Prevent</option>
+                          </select>
+
+                    </td>
+                    <td>Created On</td>
+                    <td>Created By</td>
+                    <td>Status</td>
+                    <td>Modified On</td>
+                    <td>Modified By</td>
+                    <td><button type="button" class="btn btn-primary add-rule-btn" >Add Rule</button></td>
+                </tr>
+
+
+                {% for page_num in range(total_pages) %}
+                <tbody class="page" id="page-{{ page_num }}" style="display: none;">
+                    {% for rule in rules[page_num*items_per_page : (page_num+1)*items_per_page] %}
+                        <tr id="rule-{{ rule.id }}">
+                        <td>{{ rule.id }}</td>
+                        <td><span class="channel-value">{{ rule.channel }}</span>
+                            <select type="text" class="form-control channel-edit" style="display: none;"required>
+                                {% for option in channel %}
+                                    <option value="{{ option[1] }}">{{ option[1] }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                         <td><span class="column-value">{{ rule.column_name }}</span>
+                             <select class="form-control column-edit" type="text" style="display: none;" placeholder="" required>
+                                    {% for option in columnname %}
+                                        <option value="{{ option[1] }}">{{ option[1] }}</option>
+                                    {% endfor %}
+                             </select>
+                         </td>
+                         <td><span class="operator-value">{{ rule.operator }}</span>
+                             <select type="text" class="form-control operator-edit" style="display: none;"required>
+                                {% for option in operator %}
+                                    <option value="{{ option[1] }}">{{ option[1] }}</option>
+                                {% endfor %}
+                            </select>
+                         </td>
+                        <td class="value-inputs1"><span class="value-value">{{ rule.value }}</span><input type="text" class="form-control edit-value" style="display: none;"></td>
+                        <td>{{ rule.allowprevent }}</td>
+                        <td>{{ rule.created_on }}</td>
+                        <td>{{ rule.created_by }}</td>
+                        <td>{{ rule.status }}</td>
+                        <td>{{ rule.modified_on }}</td>
+                        <td>{{ rule.modified_by }}</td>
+
+                         {% if action == 'pending'%}
+                            <td class="button-container">
+                                {% if userdetails.Role == 'Approver' or userdetails.Role == 'Admin'   %}
+
+                                    <form action="/rules_watchlist/update/{{ rule.id }}" method="post">
+                                        <input type="hidden" name="action" value="approved">
+                                        <input type="hidden" name="username" value="{{ user }}">
+                                        <button type="submit" class="btn btn-success" style="font-size: 0.9em;">
+                                            <i class="fa fa-check"></i> Approve
+                                        </button>
+                                    </form>
+                                    <form action="/rules_watchlist/update/{{ rule.id }}" method="post">
+                                        <input type="hidden" name="action" value="declined">
+                                        <input type="hidden" name="username" value="{{ user }}">
+                                        <button type="submit" class="btn btn-danger" style="font-size: 0.9em;">
+                                            <i class="fa fa-times"></i> Decline
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    <form action="/rules_watchlist/update/{{ rule.id }}" method="post">
+                                        <input type="hidden" name="action" value="alert">
+                                        <input type="hidden" name="username" value="{{ user }}">
+                                        <button type="submit" class="btn btn-warning" style="font-size: 0.9em;">
+                                            <i class="fa fa fa-bell"></i> Alert
+                                        </button>
+                                    </form>
+                                    <form action="/rules_watchlist/delete/{{ rule.id }}" method="post">
+                                        <input type="hidden" name="username" value="{{ user }}">
+                                         <input type="hidden" name="action" value="pending">
+                                        <button type="submit" class="btn btn-danger fas fa-trash-alt"></button>
+                                    </form>
+                                {% endif %}
+                            </td>
+                        {% elif action == 'declined' %}
+                            <td class="button-container">
+                                {% if userdetails.Role == 'Approver' or userdetails.Role == 'Admin' %}
+                                     <span class="text-danger">
+                                             <i class="fas fa-exclamation-circle"></i>  Declined
+                                     </span>
+
+                                {% else %}
+                                    <button type="button" class="btn btn-primary edit-btn fas fa-edit"></button>
+                                    <button type="button" class="btn btn-success update-btn " style="display: none;" id="reupdate"> <i class="fas fa-sync-alt"></i> Update</button>
+                                    <form action="/rules_watchlist/update/{{ rule.id }}" method="post">
+                                        <input type="hidden" name="action" value="RequestAgain">
+                                        <input type="hidden" name="username" value="{{ user }}">
+                                        <button type="submit" class="btn btn-success " style="font-size: 0.8em !important;font-family: sans-serif;">Resent</button>
+                                    </form>
+                                     <form action="/rules_watchlist/delete/{{ rule.id }}" method="post">
+                                        <input type="hidden" name="username" value="{{ user }}">
+                                         <input type="hidden" name="action" value="declined">
+                                        <button type="submit" class="btn btn-danger fas fa-trash-alt"></button>
+                                    </form>
+                                {% endif %}
+                            </td>
+                        {% else %}
+                            <td class="button-container">
+                                {% if userdetails.Role == 'Approver' or userdetails.Role == 'Admin' %}
+                                     <button type="button" class="btn btn-primary edit-btn fas fa-edit"></button>
+                                    <button type="button" class="btn btn-success update-btn " style="display: none;"; id="update"> <i class="fas fa-sync-alt"></i> Update</button>
+                                    <form action="/rules_watchlist/toggle/{{ rule.id }}" method="post">
+                                        <input type="hidden" name="username" value="{{ user }}">
+                                        <button type="submit" class="btn btn-{{ 'warning fas fa-times' if rule.status == 'Enabled' else 'success fas fa-check' }}">
+                                            {{ '' if rule.status == 'Enabled' else '' }}
+                                        </button>
+                                    </form>
+                                    <form action="/rules_watchlist/delete/{{ rule.id }}" method="post">
+                                        <input type="hidden" name="username" value="{{ user }}">
+                                        <button type="submit" class="btn btn-danger fas fa-trash-alt"></button>
+                                    </form>
+
+
+                                {% else %}
+                                    <span class="{{ 'text-success' if rule.status == 'Enabled' else 'text-danger' }}">
+                                             <i class="{{ 'fas fa-check' if rule.status == 'Enabled' else 'fas fa-times' }}"></i> {{ 'Enabled' if rule.status == 'Enabled' else 'Disabled' }}
+                                     </span>
+
+                                {% endif %}
+                            </td>
+                        {% endif %}
+                    </tr>
+                 {% endfor %}
+            </tbody>
+        {% endfor %}
+    </tbody>
+</table>
+        <div id="pagination-controls" class="pagination">
+            <button onclick="goToFirstPage()" class="pagination-button">&lt;&lt;</button>
+            <button onclick="previousPage()" class="pagination-button">&lt;</button>
+            <div id="page-buttons" class="pagination-buttons"></div> <!-- Container for page number buttons -->
+            <button onclick="nextPage()" class="pagination-button">&gt;</button>
+            <button onclick="goToLastPage()" class="pagination-button">&gt;&gt;</button>
+        </div>
+        </div>
+    </div>
+</div>
+<div>Watchlist Management</div>
+
+<script src="{{ url_for('static', filename='/vendor/rules.js') }}"></script>
+<script>
+var queryString = window.location.search;
+var urlParams = new URLSearchParams(queryString);
+if (urlParams.has('erromsg')) {
+    var errorMsg = urlParams.get('erromsg');
+    alert(errorMsg);
+    }
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+    }
+
+const totalPages = {{ total_pages }};
+
+
+
+
+</script>
+</div>
+{% endblock %}

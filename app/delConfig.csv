@@ -1,0 +1,17 @@
+Id,Channel,AlertType,EmailId,created_on,created_by,modified_on,modified_by,status,deleted_on,deleted_by
+1,ATM,Blocked,jyoti.kharade@maximusinfoware.in,1,jyo,2024-06-06 11:06:39.527414,john,Enabled,2024-06-06 11:08:13.850164,john
+1717652409,ECOM,Blocked,omkarnik02@gmail.com,2024-06-06 11:10:09.046670,,2024-06-06 11:10:23.323348,john,Enabled,2024-06-06 11:10:54.566408,john
+1717651886,POS,Suspicious,omkarnik02@gmail.com,2024-06-06 11:01:26.353154,,,,Enabled,2024-06-06 11:11:04.010191,john
+1717652506,POS,Suspicious,omkarnik02@gmail.com,2024-06-06 11:11:46.363071,,,,Enabled,2024-06-06 11:14:33.842236,john
+1717652887,POS,Suspicious,omkarnik02@gmail.com,2024-06-06 11:18:07.675382,,,,Enabled,2024-06-06 11:18:11.803485,john
+1717652896,POS,Suspicious,omkarnik02@gmail.com,2024-06-06 11:18:16.778338,,,,Enabled,2024-06-06 11:25:19.427418,john
+1717653316,ECOM,Suspicious,omkarnik02@gmail.com,2024-06-06 11:25:16.268490,,,,Enabled,2024-06-06 11:27:47.657481,john
+1717653474,POS,Suspicious,omkarnik02@gmail.com,2024-06-06 11:27:54.097285,,,,Enabled,2024-06-06 11:28:05.888624,john
+1717653484,ECOM,Suspicious,omkarnik02@gmail.com,2024-06-06 11:28:04.217578,,,,Enabled,2024-06-06 11:28:36.880789,john
+1717665370,ATM,hgn,omkarnik02@gmail.com	,2024-06-06 14:46:10.586490,,,,Enabled,2024-06-06 14:46:14.103608,John
+1717665304,ATM,htnt,rtgb@,2024-06-06 14:45:04.487982,,,,Enabled,2024-06-06 14:46:15.937050,John
+1717678904,ATM,,,2024-06-06 18:31:44.555037,,,,Enabled,2024-06-06 18:31:47.453351,John
+1717653523,ECOM,Suspicious,omkarnik02@gmail.com,2024-06-06 11:28:43.866202,,2024-06-11 11:55:09.030546,on,Disabled,2024-06-14 10:59:00.668334,on
+1717654839,POSA,Suspiciousk,omkarnik02@gmail.com,2024-06-06 11:50:39.662704,,2024-06-06 11:54:14.081491,Star,Disabled,2024-06-14 10:59:01.049622,on
+1718013747,POS,BLOCKED,kkkk@,2024-06-10 15:32:27.108355,,,,Enabled,2024-06-14 10:59:02.199276,on
+1719292723,ATM,,,2024-06-25 10:48:43.230862,,2024-06-25 10:48:46.069306,on,Disabled,2024-06-25 10:48:47.604653,on

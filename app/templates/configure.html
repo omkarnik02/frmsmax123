@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}Configure {% endblock %}
+{% block content %}
+
+  <h1>Configure</h1>
+  <div>
+  Mailing Details
+  </div>
+
+<!--        self.AlertType = AlertType-->
+<!--        self.EmailId = EmailId-->
+<!--        self.Channel = Channel-->
+<!--        self.created_on = datetime.now()-->
+<!--        self.created_by = created_by-->
+<!--        self.modified_on = ''-->
+<!--        self.modified_by = ''-->
+<!--        self.Id = int(time.time())-->
+<!--        self.status = 'Enabled'-->
+<h1>Configure</h1>
+    <div class="container">
+            <div class="ruleTable">
+            <button id="add-config-button" class="btn btn-primary mb-3">+Add Mail Config</button>
+            <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Channel</th>
+                    <th>AlertType</th>
+                    <th>EmailId</th>
+                    <th>Created On</th>
+                    <th>Created By</th>
+                    <th>Status</th>
+                    <th>Modified On</th>
+                    <th>Modified By</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="new-config-row" style="display: none;">
+                    <td>ID</td>
+                    <td>
+                    <select class="form-control" name="new-channel" required>
+                        <option value="ATM">ATM</option>
+                        <option value="POS">POS</option>
+                        <option value="ECOM">ECOM</option>
+                    </select>
+                </td>
+                    <td><input type="text" class="form-control" name="new-AlertType" placeholder="AlertType" required></td>
+                <td><input type="text" class="form-control" name="new-EmailId" placeholder="EmailId" required></td>
+
+
+
+
+                    <td>Created On</td>
+                    <td>Created By</td>
+                    <td>Status</td>
+                    <td>Modified On</td>
+                    <td>Modified By</td>
+                    <td><button type="button" class="btn btn-primary add-config-btn" >Add Config</button></td>
+                </tr>
+
+
+                {% for config in configs %}
+                    <tr id="config-{{ config.Id }}">
+                        <td>{{ config.Id }}</td>
+                        <td><span class="channel-value">{{ config.Channel }}</span><input type="text" class="form-control channel-edit" style="display: none;"></td>
+                         <td><span class="AlertType-value">{{ config.AlertType }}</span><input type="text" class="form-control AlertType-edit" style="display: none;"></td>
+                         <td><span class="EmailId-value">{{ config.EmailId }}</span><input type="text" class="form-control EmailId-edit" style="display: none;"></td>
+
+                        <td>{{ config.created_on }}</td>
+                        <td>{{ config.created_by }}</td>
+                        <td>{{ config.status }}</td>
+                        <td>{{ config.modified_on }}</td>
+                        <td>{{ config.modified_by }}</td>
+
+                        <td class="button-container">
+                            <button type="button" class="btn btn-primary edit-btn fas fa-edit"></button>
+                            <button type="button" class="btn btn-success update-btn fas fa-sync-alt" style="display: none;">Update</button>
+                            <form action="/configure/configs/toggle/{{ config.Id }}" method="post">
+                                <input type="hidden" name="username" value="{{ user }}">
+                                <button type="submit" class="btn btn-{{ 'warning fas fa-times' if config.status == 'Enabled' else 'success fas fa-check' }}">
+                                    {{ '' if config.status == 'Enabled' else '' }}
+                                </button>
+                            </form>
+
+
+                            <form action="/configure/configs/delete/{{ config.Id }}" method="post">
+                                <input type="hidden" name="username" value="{{ user }}">
+                                <button type="submit" class="btn btn-danger fas fa-trash-alt"> </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='/vendor/config.js') }}"></script>
+
+
+{% endblock %}

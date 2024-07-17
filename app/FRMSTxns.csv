@@ -1,0 +1,8 @@
+txnID,DateTime,CardNumber,MCC,Channel,Amount,location,currency,status,Reason
+1,'2024-04-02 12:00:55',1234,5411,df,520,qwerty,421,allow,"[{'condition': '520 < 100', 'decision': 'allow'}]"
+2,'2024-03-12 23:00:55',7891,5411,df,520,qwerty,421,allow,"[{'condition': '520 < 100', 'decision': 'allow'}]"
+12345,'2024-04-02 12:00:55',1234,5411,df,520,qwerty,421,allow,"[{'condition': '520 < 100', 'decision': 'allow'}, {'condition': '5411 in [5411,5651,8012]', 'decision': 'allow'}]"
+12345,'2024-04-02 00:00:55',1234,5414,df,520,qwerty,421,prevent,"[{'condition': '520 < 100', 'decision': 'allow'}, {'condition': '5414 in [5411,5651,8012]', 'decision': 'prevent'}]"
+12345,'2024-04-02 00:00:55',1234,5414,df,520,qwerty,421,prevent,"[{'condition': '520 < 100', 'decision': 'allow'}, {'condition': '5414 in [5411,5651,8012]', 'decision': 'prevent'}]"
+12345,'2024-04-02 00:00:55',1234,5414,df,520,qwerty,421,prevent,"[{'condition': '520 < 100', 'decision': 'allow'}, {'condition': '5414 in [5411,5651,8012]', 'decision': 'prevent'}]"
+12345,'2024-04-02 00:00:55',1234,5411,df,520,qwerty,421,allow,"[{'condition': '520 < 100', 'decision': 'allow'}, {'condition': '5411 in [5411,5651,8012]', 'decision': 'allow'}]"

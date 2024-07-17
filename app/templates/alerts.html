@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}Alerts{% endblock %}
+{% block content %}
+
+<div id="Pagebox" class="content box">
+    <h1 style="margin-top:0px">Alerts</h1>
+    <div style="margin-top: 20px; margin-left: 20px;">
+    <!-- Search Form -->
+        <form method="GET" action="{{ url_for('alert_routes.alerts') }}" class="form-inline mb-3">
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <div class="  pl-0">
+                        <label for="search_id" class="font-weight-bold text-left">Alert ID:</label>
+                    </div>
+                    <div class="col-12 pl-0">
+                        <input type="text" id="search_id" name="search_id" class="form-control form-control-md" style="width: 100%;" value="{{ request.args.get('search_id', '') }}">
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <div class=" pl-0">
+                        <label for="search_object_id" class="font-weight-bold text-left">Object ID:</label>
+                    </div>
+                    <div class="col-12 pl-0">
+                        <input type="text" id="search_object_id" name="search_object_id" class="form-control form-control-md" style="width: 100%;" value="{{ request.args.get('search_object_id', '') }}">
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <div class=" pl-0">
+                        <label for="search_created_on" class="font-weight-bold text-left">Created On:</label>
+                    </div>
+                    <div class="col-12 pl-0">
+                        <input type="text" id="search_created_on" name="search_created_on" class="form-control form-control-md" style="width: 100%;" value="{{ request.args.get('search_created_on', '') }}">
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <div class=" pl-0">
+                        <label for="search_alert_category" class="font-weight-bold text-left">Alert Category:</label>
+                    </div>
+                    <div class="col-12 pl-0">
+                        <input type="text" id="search_alert_category" name="search_alert_category" class="form-control form-control-md" style="width: 100%;" value="{{ request.args.get('search_alert_category', '') }}">
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <div class=" pl-0">
+                        <label for="search_visited" class="font-weight-bold text-left">Visited:</label>
+                    </div>
+                    <div class="col-12 pl-0">
+                        <select id="search_visited" name="search_visited" class="form-control form-control-md" style="width: 100%;">
+                            <option value="">All</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-2 align-self-end" style="margin-bottom: 4px">
+                    <div class=" pl-0">
+                        <button type="submit" class="btn btn-primary btn-md">Search</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="container">
+        <div class="alertTable">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>ObjectID</th>
+                        <th>CreatedOn</th>
+                        <th>Alert Category</th>
+                        <th>Description</th>
+                        <th>Visited</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for alert in alertsk %}
+                    <tr>
+                        <td>{{ alert.id }}</td>
+                        <td>{{ alert.ObjId }}</td>
+                        <td>{{ alert.CreatedOn }}</td>
+                        <td>{{ alert.AlertCategory }}</td>
+                        <td>{{ alert.Description }}</td>
+                        <td class="{{ 'text-success' if alert.is_seen=='1' else 'text-danger' }}">
+                            <i class="{{ 'fas fa-check-circle' if alert.is_seen=='1' else 'fas fa-hourglass-start' }}"></i>
+                            {{  " Yes" if alert.is_seen=="1"  else "No" }}
+                        </td>
+                        <td>
+                            <form action="{{alert.NavLink}}#rule-{{alert.ObjId}}" method="post">
+                                <input type="hidden" name="action" value="alertredirect">
+                                <input type="hidden" name="objid" value="{{ alert.ObjId }}">
+                                <input type="hidden" name="altid" value="{{ alert.id }}">
+                                <button type="submit" class="btn btn-primary" style="font-size: 0.9em; {{ 'visibility:hidden;' if alert.rank > 1 else '' }}"">
+                                    <i class="fa fa-external-link "></i> Go To Page
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}System module{% endblock %}
+{% block content %}
+<div id="Pagebox" class="content box" >
+<h1 style="margin-top:0px">Role Management</h1>
+    <div class="container">
+        <div class="roleTable">
+            <button id="add-role-button" class="btn btn-primary mb-3">+Add Role</button>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>UserName</th>
+                        <th>Email</th>
+                        <th>PhoneNo</th>   				
+                        <th>Role</th>
+                        <th>ClearanceID</th>
+                        <th>Groups</th>
+                        <th>Passwords</th>
+                        <th>Status</th>
+                        <th>Action</th>
+
+                </thead>
+                <tbody>
+                    <tr id="new-role-row" style="display: none;">
+                        <td>ID</td>
+                        <td id="nameTd"><input type="text" class="form-control" name="new-name" placeholder="Name" required></td>
+                        <td id="emailidTd"><input type="email" class="form-control" name="new-emailid" placeholder="E-mail" required></td>
+                        <td id="PhonenoTd"><input type="number" class="form-control" name="new-number" placeholder="Number" required></td>
+                        <td id="roleTd">
+                            <select class="form-control" name="new-role" id="roleSelect" required>
+                                <option value="Admin">Admin</option>
+                                <option value="Approver">Approver</option>
+                                <option value="Maker">Maker</option>
+                            </select>
+                        </td>
+                        <td id="clearanceTd">
+                            <select class="form-control" name="new-clearance" id="clearanceSelect" required>
+                                <option value='["alerts","roles"]'>["alerts","roles"]</option>
+                           
+                            </select>
+                        </td>   
+                        <td id="groupsTd">
+                            <input type="text" class="form-control" name="new-groups" placeholder="groups" required></td>   
+                        <td id="pswordTd"><input type="password" class="form-control" name="new-psword" placeholder="Pword" required></td>
+                        <td id="statusTd">
+                            <select class="form-control" name="new-status" id="statusSelect" required>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
+                        </td>   
+                        <td ><button type="button" class="btn btn-primary add-role-btn">Add Role</button></td>
+                    </tr>
+                    {% for role in roles %}
+                    <tr id="role-{{ role.id }}">
+                        <td>{{ role.id }}</td>
+                            <td><span class="UserName-value">{{ role.UserName }}</span><input type="text" class="form-control username-edit" style="display: none;"></td>
+                            <td><span class="email-value">{{ role.email }}</span><input type="email" class="form-control email-edit" style="display: none;"></td>
+                            <td><span class="phoneNo-value">{{ role.phoneNo }}</span><input type="number" class="form-control number-edit" style="display: none;"></td>
+                            <td><span class="Role-value">{{ role.Role }}</span><input type="text" class="form-control role-edit" style="display: none;"></td>
+                            <td><span class="clearance-value">{{ role.Clearance }}</span><input type="text" class="form-control clearance-edit" style="display: none;"></td>
+                            <td><span class="groups-value">{{ role.groups }}</span><input type="text" class="form-control groups-edit" style="display: none;"></td>
+                            <td><span class="Passwords-value">{{ role.Passwords }}</span><input type="password" class="form-control Password-edit" style="display: none;"></td>
+                            <td><span class="Status-value">{{ role.Status }}</span><input type="text" class="form-control status-edit" style="display: none;"></td>
+                            <td class="button-container">
+                                <button type="button" class="btn btn-primary edit-btn fas fa-edit"></button>
+                                <button type="button" class="btn btn-success update-btn fas fa-sync-alt" style="display: none;">Update</button>
+                                <form action="/System_module/toggle/{{ role.id }}" method="post">
+                                    <input type="hidden" name="username" value="{{ user }}">
+                                    <button type="submit" class="btn toggle-role-btn btn-{{ 'success fas fa-check' if role.Status == 'Inactive' else 'warning fas fa-times' }}">
+                                        {{ '' if role.Status == 'Active' else '' }}
+                                    </button>                                    
+                                </form>
+                                <form action="/System_module/delete/{{ role.id }}" method="post">
+                                    <input type="hidden" name="username" value="{{ user }}">
+                                    <button type="submit" class="btn btn-danger fas fa-trash-alt delete-role-btn"> </button>
+                                </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+<script src="{{ url_for('static', filename='/vendor/roles.js') }}"></script>
+{% endblock %}

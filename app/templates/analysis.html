@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}Analysis{% endblock %}
+{% block content %}
+<div class="container-fields">
+  <h1>Analysis</h1><br>
+  <button  class="search-btn" onclick="toggleContent()" style="margin-left: 10px">
+  <i style="padding-right: 5px" class="fas fa-search"></i>Find by Card/RRN</button>
+
+  <div class="analyseForm"></div>
+<br>
+<form action="/analysis/analysedetails" method="post">
+  <div>
+      <table>
+      <tr>
+          <td style="padding-right: 50px;">
+              <label for="channel">Channel:</label><br>
+              <input type="text" id="channel" class="form-control" name="channel"><br>
+          </td>
+          <td style="padding:0px 50px;">
+              <label for="fromdate">From Date:</label><br>
+              <input type="date" id="fromdate" class="form-control" name="fromdate"><br>
+          </td>
+          <td style="padding:0px 50px;">
+              <label for="todate">To Date:</label><br>
+              <input type="date" id="todate" class="form-control" name="todate"><br>
+          </td>
+          <td style="padding:0px 33px;">
+              <label for="mcc">MCC:</label><br>
+              <input type="text" id="mcc" class="form-control" name="mcc"><br>
+          </td>
+          <td style="padding-top: 6px"><button type="submit" id="analyseBtn" class="btn btn-primary">Search</button></td>
+
+      </tr>
+  </table>
+  </div>
+  <div id="filter" style="display: none;">
+  <table>
+      <tr>
+          <td style="padding-right: 66px;">
+              <label for="CardNumber">Card Number:</label><br>
+              <input type="text" id="CardNumber" class="form-control" name="CardNumber"><br>
+          </td>
+          <td>(or)</td>
+          <td style="padding:0px 33px;">
+              <label for="TxnID">TxnID(RRN):</label><br>
+              <input type="text" id="TxnID" class="form-control" name="TxnID"><br>
+          </td>
+
+      </tr>
+      <tr>
+
+      </tr>
+  </table>
+  </div>
+
+</form></div>
+<div id="Pagebox" class="content box" >
+  <div class="container">
+<table class="table">
+  <thead>
+      <tr>
+          <th>ID</th>
+          <th>DateTime</th>
+          <th>CardNumber</th>
+          <th>MCC</th>
+          <th>Channel</th>
+          <th>Amount</th>
+          <th>Location</th>
+          <th>Currency</th>
+          <th>Status</th>
+          <th>Reason</th>
+      </tr>
+  </thead>
+  <tbody>
+      {% if prevs %}
+          {% for rule in prevs %}
+          <tr>
+              <td>{{ rule.txnID }}</td>
+              <td>{{ rule.DateTime }}</td>
+              <td>{{ rule.CardNumber }}</td>
+              <td>{{ rule.MCC }}</td>
+              <td>{{ rule.Channel }}</td>
+              <td>{{ rule.Amount }}</td>
+              <td>{{ rule.location }}</td>
+              <td>{{ rule.currency }}</td>
+              <td>{{ rule.status }}</td>
+              <td>{{ rule.Reason }}</td>
+          </tr>
+          {% endfor %}
+      {% else %}
+          <tr>
+              <td colspan="11">No records found</td>
+          </tr>
+      {% endif %}
+  </tbody>
+</table>
+</div>
+</div>
+{% endblock %}

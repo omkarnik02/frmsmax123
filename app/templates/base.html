@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}FRMS{% endblock %}</title>
+    <link href="{{ url_for('static', filename='favicon.ico') }}" rel="icon" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/bs4/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/style.css') }}" /> 
+    <script type="text/javascript" src="{{ url_for('static', filename='vendor/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='vendor/bs4/bootstrap.min.js') }}"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    
+</head>
+<body>
+    <div class="navbar-container">
+        <div class="logo-container">
+            <a href="https://www.maximusinfoware.in/"><img src="{{ url_for('static', filename='vendor/media/Maximus-logo.svg') }}" alt="MaximusImage" class="navbar-img"></a>
+        </div>
+       <ul class="navbar">
+            <li class="item"><a href="/Home" class="navbar-a" data-target="Dashboard">Home</a></li>
+            <li class="item"><a href="/analysis" class="navbar-a" data-target="Analyse">Analysis</a></li>
+            <li class="item"><a href="/cim" class="navbar-a" data-target="Rules">CIM</a></li>
+            <li class="item"><a href="/alerts" class="navbar-a" data-target="System">Alerts</a></li>
+            <li class="item"><a href="/rules_watchlist/rules" class="navbar-a" data-target="Logs">Rules</a></li>
+            <li class="item"><a href="/System_module/roles" class="navbar-a">System Module</a></li>
+            <li class="item"><a href="/testing_form" class="navbar-a">Testing Form</a></li>
+<!--            <li class="item"><a href="/Suggest" class="navbar-a">Suggest</a></li>-->
+            <li class="item"><a href="/configure/configs" class="navbar-a">Configure</a></li>
+            <li class="item"><a href="/signout" class="navbar-a">Sign Out</a></li>
+        </ul>
+    </div>
+
+    <br><br><br>
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+    
+    <script src="{{ url_for('static', filename='vendor/script.js') }}"></script>
+</body>
+</html>

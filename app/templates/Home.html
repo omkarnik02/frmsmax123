@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<style>
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        margin-bottom: 10px;
+    }
+
+
+    iframe {
+        flex: 1;
+        height: 100%;
+        border: none;
+    }
+</style>
+<main>
+     <iframe title="FASTag Summary" src="https://app.powerbi.com/view?r=eyJrIjoiNGQwZGQ4MWUtNzU4Yy00MTlhLWIwOTItNDViZjkyMjA0NTViIiwidCI6ImUzZTY1YTY3LTA3MTgtNDM4MS04ZTY2LWU5NjliMTJjOWRiYSJ9" allowfullscreen="true"></iframe>
+</main>
+{% endblock %}

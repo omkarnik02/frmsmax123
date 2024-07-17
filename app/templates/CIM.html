@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}CIM{% endblock %}
+{% block content %}
+<div>Filters</div>
+<div class="container-fields">
+  <h1>Analysis</h1><br>
+  <button  class="search-btn" onclick="toggleContent()" style="margin-left: 10px">
+  <i style="padding-right: 5px" class="fas fa-search"></i>Find by Card/RRN</button>
+
+  <div class="analyseForm"></div>
+<br>
+<form action="/analysis/analysedetails" method="post">
+  <div>
+      <table>
+      <tr>
+          <td style="padding-right: 50px;">
+              <label for="channel">Channel:</label><br>
+              <input type="text" id="channel" class="form-control" name="channel"><br>
+          </td>
+          <td style="padding:0px 50px;">
+              <label for="fromdate">From Date:</label><br>
+              <input type="date" id="fromdate" class="form-control" name="fromdate"><br>
+          </td>
+          <td style="padding:0px 50px;">
+              <label for="todate">To Date:</label><br>
+              <input type="date" id="todate" class="form-control" name="todate"><br>
+          </td>
+          <td style="padding:0px 33px;">
+              <label for="mcc">MCC:</label><br>
+              <input type="text" id="mcc" class="form-control" name="mcc"><br>
+          </td>
+          <td style="padding-top: 6px"><button type="submit" id="analyseBtn" class="btn btn-primary">Search</button></td>
+
+      </tr>
+  </table>
+  </div>
+  <div id="filter" style="display: none;">
+  <table>
+      <tr>
+          <td style="padding-right: 66px;">
+              <label for="CardNumber">Card Number:</label><br>
+              <input type="text" id="CardNumber" class="form-control" name="CardNumber"><br>
+          </td>
+          <td>(or)</td>
+          <td style="padding:0px 33px;">
+              <label for="TxnID">TxnID(RRN):</label><br>
+              <input type="text" id="TxnID" class="form-control" name="TxnID"><br>
+          </td>
+
+      </tr>
+      <tr>
+
+      </tr>
+  </table>
+  </div>
+
+</form></div>
+  <h1>Case Investigation Module</h1>
+  <div>Cases</div>
+<div>Case Details</div>
+<div>Simulate Case</div>
+
+<div>Status Table</div>
+{% endblock %}
